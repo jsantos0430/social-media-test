@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const loadModels = require('../app/models')
 
 module.exports = () => {
     const connect = () => {
@@ -25,4 +26,6 @@ module.exports = () => {
 
     mongoose.connection.on('err', console.log)
     mongoose.connection.on('disconnected', connect)
+
+    loadModels()
 }

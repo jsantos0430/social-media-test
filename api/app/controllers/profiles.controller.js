@@ -51,7 +51,13 @@ async function deleteProfile(req, res) {
     }
 }
 
-
+/*
+    WARNING:
+    This controller is an alternative that we can use to created profiles massively
+    but has a maximum of profiles (100).
+    we recommend using command. 
+        Example: npm run seed profiles <numberOfProfiles> <maxOfRelationshipPerProfile>
+*/
 
 async function seedProfiles(req, res) {
     try {
