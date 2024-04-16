@@ -1,4 +1,5 @@
 const modelProfiles = require('../models/profiles')
+const modelProfilesRelationship = require('../models/profilesRelationship')
 const profilesSeeder = require('../seeders/profiles')
 const utils = require('../resources/js/utils')
 const profilesRelationship = require('../resources/js/profilesRelationship')
@@ -11,6 +12,18 @@ async function createProfile(req, res) {
         await profile.save()
 
         res.status(200).json({ profileId: profile._id })
+    } catch (err) {
+        res.status(401).json({ err })
+    }
+}
+
+async function getProfileFriends(req, res) {
+    try {
+        let id = req.params.id;
+
+        let relationship = await modelProfilesRelationship.findOne({ 'profiles._id': id })
+
+        res.status(200).json({ friends: relationship.friends })
     } catch (err) {
         res.status(401).json({ err })
     }
@@ -57,7 +70,7 @@ async function getShorestRelationshipBetweenProfiles(req, res) {
     try {
         let profile_a = req.body.profile_a
         let profile_b = req.body.profile_b
-        
+
         let path = await profilesRelationship.getShorestRelationshipBetweenProfiles(profile_a, profile_b)
 
         res.status(200).json({ path })
@@ -92,6 +105,7 @@ async function seedProfiles(req, res) {
 }
 exports.createProfile = createProfile
 exports.getProfile = getProfile
+exports.getProfileFriends = getProfileFriends
 exports.updateProfile = updateProfile
 exports.deleteProfile = deleteProfile
 exports.seedProfiles = seedProfiles

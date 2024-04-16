@@ -4,6 +4,7 @@ const middAuth = require('../middlewares/auth')
 module.exports = (router) => {
     router.post('/profiles/create', middAuth.verifyToken, profilesController.createProfile)
     router.get('/profiles/:id', middAuth.verifyToken, profilesController.getProfile)
+    router.get('/profiles/all-friends/:id', middAuth.verifyToken, profilesController.getProfileFriends)
     router.put('/profiles/:id', middAuth.verifyToken, profilesController.updateProfile)
     router.delete('/profiles/:id', middAuth.verifyToken, profilesController.deleteProfile)
     router.post('/profiles/shortest-relationship-between-profile', middAuth.verifyToken, profilesController.getShorestRelationshipBetweenProfiles)
