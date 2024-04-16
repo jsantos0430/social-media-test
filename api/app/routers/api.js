@@ -5,6 +5,7 @@ module.exports = (router) => {
     router.get('/profiles/:id', profilesController.getProfile)
     router.put('/profiles/:id', profilesController.updateProfile)
     router.delete('/profiles/:id', profilesController.deleteProfile)
+    router.post('/profiles/shortest-relationship-between-profile', profilesController.getShorestRelationshipBetweenProfiles)
 
     router.post('/profiles/seed/:numberOfProfiles/:maxOfRelationshipPerProfile', profilesController.seedProfiles)
     return router

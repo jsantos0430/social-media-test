@@ -1,6 +1,8 @@
 const modelProfiles = require('../models/profiles')
 const profilesSeeder = require('../seeders/profiles')
 const utils = require('../resources/js/utils')
+const profilesRelationship = require('../resources/js/profilesRelationship')
+
 async function createProfile(req, res) {
     try {
         let profileData = req.body
@@ -51,6 +53,18 @@ async function deleteProfile(req, res) {
     }
 }
 
+async function getShorestRelationshipBetweenProfiles(req, res) {
+    try {
+        let profile_a = req.body.profile_a
+        let profile_b = req.body.profile_b
+        
+        let path = await profilesRelationship.getShorestRelationshipBetweenProfiles(profile_a, profile_b)
+
+        res.status(200).json({ path })
+    } catch (err) {
+        res.status(401).json({ err })
+    }
+}
 /*
     WARNING:
     This controller is an alternative that we can use to created profiles massively
@@ -81,3 +95,4 @@ exports.getProfile = getProfile
 exports.updateProfile = updateProfile
 exports.deleteProfile = deleteProfile
 exports.seedProfiles = seedProfiles
+exports.getShorestRelationshipBetweenProfiles = getShorestRelationshipBetweenProfiles
