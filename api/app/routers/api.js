@@ -1,12 +1,13 @@
 const profilesController = require('../controllers/profiles.controller')
+const middAuth = require('../middlewares/auth')
 
 module.exports = (router) => {
-    router.post('/profiles/create', profilesController.createProfile)
-    router.get('/profiles/:id', profilesController.getProfile)
-    router.put('/profiles/:id', profilesController.updateProfile)
-    router.delete('/profiles/:id', profilesController.deleteProfile)
-    router.post('/profiles/shortest-relationship-between-profile', profilesController.getShorestRelationshipBetweenProfiles)
+    router.post('/profiles/create', middAuth.verifyToken, profilesController.createProfile)
+    router.get('/profiles/:id', middAuth.verifyToken, profilesController.getProfile)
+    router.put('/profiles/:id', middAuth.verifyToken, profilesController.updateProfile)
+    router.delete('/profiles/:id', middAuth.verifyToken, profilesController.deleteProfile)
+    router.post('/profiles/shortest-relationship-between-profile', middAuth.verifyToken, profilesController.getShorestRelationshipBetweenProfiles)
 
-    router.post('/profiles/seed/:numberOfProfiles/:maxOfRelationshipPerProfile', profilesController.seedProfiles)
+    router.post('/profiles/seed/:numberOfProfiles/:maxOfRelationshipPerProfile', middAuth.verifyToken, profilesController.seedProfiles)
     return router
 }
