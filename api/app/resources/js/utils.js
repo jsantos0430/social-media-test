@@ -12,3 +12,10 @@ exports.parseStringToObjectId = (ids) => {
     });
     return objects
 }
+
+exports.setProfileFriendsEdges = (friends) => {
+    return friends.reduce((prev, curr) => {
+        prev[curr._id] = 1;
+        return prev;
+    }, {})
+}

@@ -1,8 +1,12 @@
 const profileGetter = require('../data/profiles')
 const modelProfiles = require('../models/profiles')
 const modelProfilesRelationship = require('../models/profilesRelationship')
+const Redis = require("ioredis");
+const utils = require('../resources/js/utils')
+
 const seedProfilesAndRelationship = async (numberOfProfiles, maxOfRelationshipPerProfile) => {
-    console.log({maxOfRelationshipPerProfile})
+    const redis = new Redis();
+
     let profiles = profileGetter(numberOfProfiles)
 
     let profilesCreated = []
@@ -12,7 +16,6 @@ const seedProfilesAndRelationship = async (numberOfProfiles, maxOfRelationshipPe
 
     // relations
     const getRandonProfiles = (profilesAvailable, numberOfRelationship) => {
-        // console.log({numberOfRelationship})
         return profilesAvailable.sort(() => 0.5 - Math.random()).slice(0, numberOfRelationship)
     }
     for (let index = 0; index < profilesCreated.length; index++) {
@@ -25,6 +28,8 @@ const seedProfilesAndRelationship = async (numberOfProfiles, maxOfRelationshipPe
             profiles: profileCreated,
             friends: profilesFriends,
         })
+
+        await redis.hset('profilesRelationship', profileCreated._id.toString(), JSON.stringify(utils.setProfileFriendsEdges(relationship.friends)))
     }
 }
 
