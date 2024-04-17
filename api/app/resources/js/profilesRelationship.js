@@ -17,6 +17,7 @@ exports.getShorestRelationshipBetweenProfiles = async (profile_a, profile_b) => 
 
         return await modelProfiles.find({ _id: { $in: path } }).select('img first_name last_name phone')
     } catch (err) {
+        // Add specialized error handling, like using newrelic or sentry
         console.log(err)
     }
 }

@@ -11,7 +11,7 @@ async function createProfile(req, res) {
         profile.available = true;
         await profile.save()
 
-        res.status(200).json({ profileId: profile._id })
+        res.status(201).json({ profileId: profile._id })
     } catch (err) {
         res.status(401).json({ err })
     }
@@ -46,9 +46,13 @@ async function updateProfile(req, res) {
         let id = req.params.id;
         let profileData = req.body
 
-        let profileFound = await modelProfiles.findByIdAndUpdate(id, profileData)
+        let profileFound = await modelProfiles.findByIdAndUpdate(id, profileData, { new: true })
 
-        res.status(200).json({ profileId: profileFound._id })
+        res.status(200).json({
+            _id: profileFound._id,
+            first_name: profileFound.first_name, 
+            last_name: profileFound.last_name
+        })
     } catch (err) {
         res.status(401).json({ err })
     }

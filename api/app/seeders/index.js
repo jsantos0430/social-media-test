@@ -1,6 +1,6 @@
 const process = require('process')
 const profilesSeeder = require('../seeders/profiles')
-const dbConexion = require('./config/db_conexion')
+const db = require('#resources/js/db.js')
 
 let seederType = process.argv[2]
 if (!seederType) return console.log('Write the Seeder Type')  
@@ -11,7 +11,7 @@ if (seederType == 'profiles') {
     if (!numberOfProfiles) return console.log('Write the number of profiles') 
     if (!maxOfRelationshipPerProfile) return console.log('Write maximum of relations between profiles') 
 
-    dbConexion.execute();
+    db.connect();
     profilesSeeder.seedProfilesAndRelationship(numberOfProfiles, maxOfRelationshipPerProfile)
     console.log('Profiles created successfully')
 } else console.log('Seeder Type not fount')

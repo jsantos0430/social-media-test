@@ -18,6 +18,7 @@ const seedProfilesAndRelationship = async (numberOfProfiles, maxOfRelationshipPe
     const getRandonProfiles = (profilesAvailable, numberOfRelationship) => {
         return profilesAvailable.sort(() => 0.5 - Math.random()).slice(0, numberOfRelationship)
     }
+    let relations = []
     for (let index = 0; index < profilesCreated.length; index++) {
         const profileCreated = profilesCreated[index];
 
@@ -28,9 +29,11 @@ const seedProfilesAndRelationship = async (numberOfProfiles, maxOfRelationshipPe
             profiles: profileCreated,
             friends: profilesFriends,
         })
-
+        relations.push(relationship)
         await redis.hset('profilesRelationship', profileCreated._id.toString(), JSON.stringify(utils.setProfileFriendsEdges(relationship.friends)))
     }
+
+    return { profilesCreated, relations }
 }
 
 exports.seedProfilesAndRelationship = seedProfilesAndRelationship

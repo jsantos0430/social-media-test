@@ -3,14 +3,19 @@
   "version": "1.0.0",
   "description": "Practice with graph into a social media app",
   "main": "index.js",
+  "imports": {
+    "#*": "./api/app/*"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "node ./api/app/seeders"
+    "seed": "node ./api/app/seeders",
+    "test": "cross-env NODE_ENV=test jest",
+    "seed-test": "cross-env NODE_ENV=test node ./api/app/seeders"
   },
   "author": "Jose Santos",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
+    "cross-env": "^7.0.3",
     "dotenv-safe": "^9.1.0",
     "express": "^4.19.2",
     "ioredis": "^5.3.2",
@@ -19,6 +24,10 @@
     "nodemon": "^3.1.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1"
+    "@faker-js/faker": "^8.4.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
   }
 }
